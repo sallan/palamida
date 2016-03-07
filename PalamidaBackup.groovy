@@ -4,10 +4,21 @@
  */
 
 // Command line arguments?
-PALAMIDA_ROOT_DIR = "C:/Palamida"
-ARCHIVE_ROOT_DIR = "D:/palamida"
+if (args.length < 2) {
+    println "Need a source and destination"
+    System.exit(1)
+}
 
-archive_file_name = ARCHIVE_ROOT_DIR + File.separator + "palamida-backup.zip"
+PALAMIDA_ROOT_DIR = args[0]
+ARCHIVE_ROOT_DIR = args[1]
+if (args.length > 2) {
+    file_name = args[2]
+}
+else {
+    file_name = "todo.zip"
+}
+
+archive_file_name = ARCHIVE_ROOT_DIR + File.separator + file_name
 
 // See if scan is running, if so, quit
 
@@ -25,4 +36,6 @@ archive_file_name = ARCHIVE_ROOT_DIR + File.separator + "palamida-backup.zip"
 // May not be the case. You should extrace the exact location
 // form the conf file.
 ant = new AntBuilder()
-ant.zip(basedir: PALAMIDA_ROOT_DIR, destfile: archive_file_name, excludes: "PDL/,CL/")
+ant.zip(basedir: PALAMIDA_ROOT_DIR,
+        destfile: archive_file_name,
+        excludes: "PDL/,CL/")
